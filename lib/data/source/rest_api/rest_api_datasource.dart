@@ -13,7 +13,7 @@ class RestApiDatasource {
   Future<List<RestAPIBookModel>> getPokemons() async {
     final response = await networkManager.request(RequestMethod.get, booksURL);
 
-    final data = (json.decode(response.data) as List)
+    final data = (json.decode(response.data["results"]) as List)
         .map((item) => RestAPIBookModel.fromJson(item))
         .toList();
 
