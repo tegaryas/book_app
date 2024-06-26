@@ -1,3 +1,4 @@
+import 'package:book_app/data/source/local/models/author.dart';
 import 'package:hive/hive.dart';
 
 part 'book.g.dart';
@@ -13,7 +14,7 @@ class BookHiveModel extends HiveObject {
   late String title;
 
   @HiveField(2)
-  late String authors;
+  late List<AuthorHiveModel> authors;
 
   @HiveField(3)
   late List<String> subject;

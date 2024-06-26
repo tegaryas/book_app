@@ -19,7 +19,7 @@ class BookHiveModelAdapter extends TypeAdapter<BookHiveModel> {
     return BookHiveModel()
       ..id = fields[0] as int
       ..title = fields[1] as String
-      ..authors = fields[2] as String
+      ..authors = (fields[2] as List).cast<AuthorHiveModel>()
       ..subject = (fields[3] as List).cast<String>()
       ..bookshelves = (fields[4] as List).cast<String>()
       ..mediaType = fields[5] as String
