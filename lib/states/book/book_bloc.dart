@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
-  static const int booksPerPage = 20;
+  static const int booksPerPage = 10;
 
   final BookRepository _bookRepository;
 

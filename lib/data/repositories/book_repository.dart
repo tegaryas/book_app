@@ -1,4 +1,5 @@
 import 'package:book_app/data/source/local/local_datasource.dart';
+import 'package:book_app/data/source/mappers/entity_to_local_mapper.dart';
 import 'package:book_app/data/source/mappers/local_to_entity_mapper.dart';
 import 'package:book_app/data/source/mappers/restapi_to_local_mapper.dart';
 import 'package:book_app/data/source/rest_api/rest_api_datasource.dart';
@@ -7,9 +8,18 @@ import 'package:book_app/domain/entities/book.dart';
 abstract class BookRepository {
   Future<List<Book>> getAllBooks();
 
-  Future<List<Book>> getBooks({required int limit, required int page});
+  Future<List<Book>> getBooks(
+      {required int limit, required int page, String query = ""});
 
   Future<Book?> getBook(int id);
+
+  Future<List<Book>> getFavoriteBooks({required int limit, required int page});
+
+  Future<void> saveFavoriteBook(Book book);
+
+  Future<void> removeFavoriteBook(Book book);
+
+  Future<Book?> getFavoriteBook(Book book);
 }
 
 class BookDefaultRepository extends BookRepository {
@@ -24,7 +34,7 @@ class BookDefaultRepository extends BookRepository {
     final hasCachedData = await localDataSource.hasData();
 
     if (!hasCachedData) {
-      final bookRestModels = await restApiDatasource.getPokemons();
+      final bookRestModels = await restApiDatasource.getBooks();
       final bookHiveModels = bookRestModels.map((e) => e.toHiveModel());
 
       await localDataSource.saveBooks(bookHiveModels);
@@ -49,23 +59,50 @@ class BookDefaultRepository extends BookRepository {
   }
 
   @override
-  Future<List<Book>> getBooks({required int limit, required int page}) async {
+  Future<List<Book>> getBooks(
+      {required int limit, required int page, String query = ""}) async {
     final hasCachedData = await localDataSource.hasData();
 
     if (!hasCachedData) {
-      final bookRestModels = await restApiDatasource.getPokemons();
+      final bookRestModels = await restApiDatasource.getBooks(page: page);
       final bookHiveModels = bookRestModels.map((e) => e.toHiveModel());
 
       await localDataSource.saveBooks(bookHiveModels);
     }
 
-    final bookHiveModels = await localDataSource.getBooks(
-      page: page,
-      limit: limit,
-    );
+    final bookHiveModels =
+        await localDataSource.getBooks(page: page, limit: limit, query: query);
 
     final bookEntities = bookHiveModels.map((e) => e.toEntity()).toList();
 
     return bookEntities;
+  }
+
+  @override
+  Future<List<Book>> getFavoriteBooks(
+      {required int limit, required int page}) async {
+    final bookHiveModels =
+        await localDataSource.getFavoriteBooks(page: page, limit: limit);
+
+    final bookEntities = bookHiveModels.map((e) => e.toEntity()).toList();
+
+    return bookEntities;
+  }
+
+  @override
+  Future<void> saveFavoriteBook(Book book) async {
+    await localDataSource.saveFavoriteBook(book.toHiveModel());
+  }
+
+  @override
+  Future<Book?> getFavoriteBook(Book book) async {
+    final bookHiveModel =
+        await localDataSource.getFavoriteBook(book.toHiveModel());
+    return bookHiveModel?.toEntity();
+  }
+
+  @override
+  Future<void> removeFavoriteBook(Book book) async {
+    await localDataSource.removeFavoriteBook(book.toHiveModel());
   }
 }

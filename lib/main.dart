@@ -4,6 +4,9 @@ import 'package:book_app/data/repositories/book_repository.dart';
 import 'package:book_app/data/source/local/local_datasource.dart';
 import 'package:book_app/data/source/rest_api/rest_api_datasource.dart';
 import 'package:book_app/states/book/book_bloc.dart';
+import 'package:book_app/states/favorite/favorite_cubit.dart';
+import 'package:book_app/states/favorite_book/favorite_book_bloc.dart';
+import 'package:book_app/states/search/search_cubit.dart';
 import 'package:book_app/states/theme/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,8 +37,17 @@ void main() async {
     ],
     child: MultiBlocProvider(
       providers: [
+        BlocProvider<SearchCubit>(
+          create: (context) => SearchCubit(context.read<BookRepository>()),
+        ),
+        BlocProvider<FavoriteCubit>(
+          create: (context) => FavoriteCubit(context.read<BookRepository>()),
+        ),
         BlocProvider<BookBloc>(
           create: (context) => BookBloc(context.read<BookRepository>()),
+        ),
+        BlocProvider<FavoriteBookBloc>(
+          create: (context) => FavoriteBookBloc(context.read<BookRepository>()),
         ),
         BlocProvider<ThemeCubit>(
           create: (context) => ThemeCubit(),

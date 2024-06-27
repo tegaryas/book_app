@@ -11,6 +11,9 @@ class Themings {
     primaryColor: AppColors.blue,
     appBarTheme: const AppBarTheme(
       toolbarTextStyle: darkText,
+      iconTheme: IconThemeData(
+        color: AppColors.whiteGrey,
+      ),
     ),
     textTheme: const TextTheme(
       bodyLarge: darkText,
@@ -22,7 +25,7 @@ class Themings {
     ),
     scaffoldBackgroundColor: AppColors.black,
     colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-        .copyWith(surface: AppColors.black),
+        .copyWith(surface: AppColors.black, brightness: Brightness.dark),
   );
 
   static final ThemeData lightTheme = ThemeData(
@@ -30,6 +33,9 @@ class Themings {
     primaryColor: AppColors.blue,
     appBarTheme: const AppBarTheme(
       toolbarTextStyle: lightText,
+      iconTheme: IconThemeData(
+        color: AppColors.whiteGrey,
+      ),
     ),
     textTheme: const TextTheme(
       bodyLarge: lightText,
@@ -41,6 +47,6 @@ class Themings {
     ),
     scaffoldBackgroundColor: AppColors.lightGrey,
     colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-        .copyWith(surface: AppColors.whiteGrey),
+        .copyWith(surface: AppColors.whiteGrey, brightness: Brightness.light),
   );
 }

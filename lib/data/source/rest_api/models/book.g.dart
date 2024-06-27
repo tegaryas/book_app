@@ -23,6 +23,8 @@ RestAPIBookModel _$RestAPIBookModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           [],
+      formats:
+          RestAPIFormatModel.fromJson(json['formats'] as Map<String, dynamic>),
       mediaType: json['media_type'] as String,
       downloadCount: (json['download_count'] as num).toInt(),
     );
@@ -34,6 +36,7 @@ Map<String, dynamic> _$RestAPIBookModelToJson(RestAPIBookModel instance) =>
       'authors': instance.authors,
       'subject': instance.subject,
       'bookshelves': instance.bookshelves,
+      'formats': instance.formats,
       'media_type': instance.mediaType,
       'download_count': instance.downloadCount,
     };

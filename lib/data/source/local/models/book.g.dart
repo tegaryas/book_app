@@ -22,14 +22,15 @@ class BookHiveModelAdapter extends TypeAdapter<BookHiveModel> {
       ..authors = (fields[2] as List).cast<AuthorHiveModel>()
       ..subject = (fields[3] as List).cast<String>()
       ..bookshelves = (fields[4] as List).cast<String>()
-      ..mediaType = fields[5] as String
-      ..downloadCount = fields[6] as int;
+      ..formats = fields[5] as FormatHiveModel
+      ..mediaType = fields[6] as String
+      ..downloadCount = fields[7] as int;
   }
 
   @override
   void write(BinaryWriter writer, BookHiveModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,8 +42,10 @@ class BookHiveModelAdapter extends TypeAdapter<BookHiveModel> {
       ..writeByte(4)
       ..write(obj.bookshelves)
       ..writeByte(5)
-      ..write(obj.mediaType)
+      ..write(obj.formats)
       ..writeByte(6)
+      ..write(obj.mediaType)
+      ..writeByte(7)
       ..write(obj.downloadCount);
   }
 

@@ -1,4 +1,5 @@
 import 'package:book_app/data/source/local/models/author.dart';
+import 'package:book_app/data/source/local/models/format.dart';
 import 'package:hive/hive.dart';
 
 part 'book.g.dart';
@@ -23,8 +24,11 @@ class BookHiveModel extends HiveObject {
   late List<String> bookshelves;
 
   @HiveField(5)
-  late String mediaType;
+  late FormatHiveModel formats;
 
   @HiveField(6)
+  late String mediaType;
+
+  @HiveField(7)
   late int downloadCount;
 }
