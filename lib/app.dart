@@ -17,7 +17,7 @@ class BookApp extends StatelessWidget {
 
     return MaterialApp(
       color: Colors.white,
-      title: 'Flutter Pokedex',
+      title: 'Flutter Gutendex',
       theme: isDark ? Themings.darkTheme : Themings.lightTheme,
       navigatorKey: AppNavigator.navigatorKey,
       onGenerateRoute: AppNavigator.onGenerateRoute,
