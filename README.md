@@ -1,16 +1,17 @@
-# book_app
+# Palm Code Task - Gutendex App
 
-A new Flutter project.
+This is a repository aimed at meeting the requirements of Mobile Developer at Palm Code.
 
-## Getting Started
+Where in this application using Bloc State Management and using Hive as a local database. There is an offline mode if the user does not have online internet access.
 
-This project is a starting point for a Flutter application.
+Link buat APK : [gdrive.link](https://drive.google.com/file/d/1CERKkB0H6_5yPavfquO9DkHK51pb9jev/view?usp=sharing "Google Drive for APK")
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshot
+<p float="left">
+  <img src= "app1.jpeg" height=400>
+  <img src= "app2.jpeg" height=400>
+  <img src= "app3.jpeg" height=400>
+  <img src= "app4.jpeg" height=400>
+  <img src= "app5.jpeg" height=400>
+  <img src= "app6.jpeg" height=400>
+</p>
