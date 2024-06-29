@@ -104,10 +104,10 @@ class _BookGridState extends State<_BookGrid> {
             case BookStateStatus.loadSuccess:
             case BookStateStatus.loadMoreSuccess:
             case BookStateStatus.loadingMore:
+            case BookStateStatus.loadMoreFailure:
               return _buildGrid();
 
             case BookStateStatus.loadFailure:
-            case BookStateStatus.loadMoreFailure:
               return _buildError();
 
             default:

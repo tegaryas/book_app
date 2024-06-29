@@ -12,7 +12,7 @@ class SearchCubit extends Cubit<SearchState> {
   Future<void> onSearchBook(String query) async {
     try {
       emit(SearchLoading());
-      final result =
+      final (result, _) =
           await _bookRepository.getBooks(page: 1, limit: 100, query: query);
       emit(SearchLoaded(books: result));
     } catch (e) {

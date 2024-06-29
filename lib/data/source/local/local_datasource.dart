@@ -16,7 +16,7 @@ class LocalDataSource {
     await Hive.openBox<BookHiveModel>(BookHiveModel.boxKey);
     await Hive.openBox<AuthorHiveModel>(AuthorHiveModel.boxKey);
     await Hive.openBox<FormatHiveModel>(FormatHiveModel.boxKey);
-    await Hive.openBox<BookHiveModel>("favoriteBook");
+    await Hive.openBox<BookHiveModel>(BookHiveModel.favoriteBoxKey);
   }
 
   Future<bool> hasData() async {
@@ -30,7 +30,6 @@ class LocalDataSource {
 
     final booksMap = {for (var e in books) e.id: e};
 
-    await bookBox.clear();
     await bookBox.putAll(booksMap);
   }
 
@@ -74,7 +73,8 @@ class LocalDataSource {
     required int page,
     required int limit,
   }) async {
-    final favoriteBooksBox = Hive.box<BookHiveModel>("favoriteBook");
+    final favoriteBooksBox =
+        Hive.box<BookHiveModel>(BookHiveModel.favoriteBoxKey);
     final totalBooks = favoriteBooksBox.length;
 
     final start = (page - 1) * limit;
@@ -89,17 +89,20 @@ class LocalDataSource {
   }
 
   Future<void> saveFavoriteBook(BookHiveModel book) async {
-    final favoriteBooksBox = Hive.box<BookHiveModel>("favoriteBook");
+    final favoriteBooksBox =
+        Hive.box<BookHiveModel>(BookHiveModel.favoriteBoxKey);
     await favoriteBooksBox.put(book.id, book);
   }
 
   Future<void> removeFavoriteBook(BookHiveModel book) async {
-    final favoriteBooksBox = Hive.box<BookHiveModel>("favoriteBook");
+    final favoriteBooksBox =
+        Hive.box<BookHiveModel>(BookHiveModel.favoriteBoxKey);
     await favoriteBooksBox.delete(book.id);
   }
 
   Future<BookHiveModel?> getFavoriteBook(BookHiveModel book) async {
-    final favoriteBooksBox = Hive.box<BookHiveModel>("favoriteBook");
+    final favoriteBooksBox =
+        Hive.box<BookHiveModel>(BookHiveModel.favoriteBoxKey);
     return favoriteBooksBox.get(book.id);
   }
 }

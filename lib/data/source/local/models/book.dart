@@ -7,6 +7,7 @@ part 'book.g.dart';
 @HiveType(typeId: 1)
 class BookHiveModel extends HiveObject {
   static const String boxKey = "book";
+  static const String favoriteBoxKey = "favoriteBook";
 
   @HiveField(0)
   late int id;

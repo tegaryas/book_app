@@ -8,7 +8,7 @@ class RestApiDatasource {
 
   static const String booksURL = "https://gutendex.com/books";
 
-  Future<List<RestAPIBookModel>> getBooks(
+  Future<(List<RestAPIBookModel>, bool)> getBooks(
       {int page = 1, List<RestAPIBookModel> data = const []}) async {
     final response = await networkManager
         .request(RequestMethod.get, booksURL, queryParameters: {"page": page});
@@ -17,8 +17,6 @@ class RestApiDatasource {
         .map((item) => RestAPIBookModel.fromJson(item))
         .toList();
 
-    if (response.data["next"] == null || page == 10) return data;
-
-    return await getBooks(page: page + 1, data: [...data, ...result]);
+    return (result, response.data["next"] != null);
   }
 }

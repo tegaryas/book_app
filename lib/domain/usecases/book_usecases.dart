@@ -23,13 +23,13 @@ class GetBooksParams {
   final int limit;
 }
 
-class GetBooksUseCase extends UseCase<List<Book>, GetBooksParams> {
+class GetBooksUseCase extends UseCase<(List<Book>, bool), GetBooksParams> {
   final BookRepository bookRepository;
 
   GetBooksUseCase({required this.bookRepository});
 
   @override
-  Future<List<Book>> call(GetBooksParams params) {
+  Future<(List<Book>, bool)> call(GetBooksParams params) {
     return bookRepository.getBooks(limit: params.limit, page: params.page);
   }
 }

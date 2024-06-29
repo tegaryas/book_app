@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:book_app/data/source/local/local_datasource.dart';
+import 'package:book_app/data/source/local/models/book.dart';
 import 'package:book_app/data/source/mappers/entity_to_local_mapper.dart';
 import 'package:book_app/data/source/mappers/local_to_entity_mapper.dart';
 import 'package:book_app/data/source/mappers/restapi_to_local_mapper.dart';
@@ -8,8 +11,12 @@ import 'package:book_app/domain/entities/book.dart';
 abstract class BookRepository {
   Future<List<Book>> getAllBooks();
 
-  Future<List<Book>> getBooks(
-      {required int limit, required int page, String query = ""});
+  Future<(List<Book>, bool)> getBooks({
+    required int limit,
+    required int page,
+    String query = "",
+    bool isOnline = false,
+  });
 
   Future<Book?> getBook(int id);
 
@@ -34,7 +41,7 @@ class BookDefaultRepository extends BookRepository {
     final hasCachedData = await localDataSource.hasData();
 
     if (!hasCachedData) {
-      final bookRestModels = await restApiDatasource.getBooks();
+      final (bookRestModels, _) = await restApiDatasource.getBooks();
       final bookHiveModels = bookRestModels.map((e) => e.toHiveModel());
 
       await localDataSource.saveBooks(bookHiveModels);
@@ -59,23 +66,31 @@ class BookDefaultRepository extends BookRepository {
   }
 
   @override
-  Future<List<Book>> getBooks(
-      {required int limit, required int page, String query = ""}) async {
-    final hasCachedData = await localDataSource.hasData();
+  Future<(List<Book>, bool)> getBooks({
+    required int limit,
+    required int page,
+    String query = "",
+    bool isOnline = false,
+  }) async {
+    bool canLoadMore = false;
+    List<BookHiveModel> bookHiveModels = [];
 
-    if (!hasCachedData) {
-      final bookRestModels = await restApiDatasource.getBooks(page: page);
-      final bookHiveModels = bookRestModels.map((e) => e.toHiveModel());
+    if (isOnline) {
+      final (bookRestModels, nextNotNull) =
+          await restApiDatasource.getBooks(page: page);
+      canLoadMore = nextNotNull;
 
+      bookHiveModels = bookRestModels.map((e) => e.toHiveModel()).toList();
+
+      log("${bookRestModels.map((e) => e.toJson()).toList()}");
       await localDataSource.saveBooks(bookHiveModels);
+    } else {
+      bookHiveModels = await localDataSource.getBooks(
+          page: page, limit: limit, query: query);
     }
-
-    final bookHiveModels =
-        await localDataSource.getBooks(page: page, limit: limit, query: query);
-
     final bookEntities = bookHiveModels.map((e) => e.toEntity()).toList();
 
-    return bookEntities;
+    return (bookEntities, canLoadMore);
   }
 
   @override
