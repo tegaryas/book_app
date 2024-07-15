@@ -36,7 +36,7 @@ jobs:
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ secrets.OPEN_AI_KEY }}" \
             -d "{
-              \"model\": \"gpt-4\",
+              \"model\": \"gpt-3.5\",
               \"messages\": [
                 { \"role\": \"system\", \"content\": \"${{ vars.CODE_REVIEW_PROMPT }}\" },
                 { \"role\": \"user\", \"content\": $escaped_code }
