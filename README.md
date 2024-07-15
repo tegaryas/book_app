@@ -6,12 +6,19 @@ Where in this application using Bloc State Management and using Hive as a local 
 
 Link buat APK : [gdrive.link](https://drive.google.com/file/d/1CERKkB0H6_5yPavfquO9DkHK51pb9jev/view?usp=sharing "Google Drive for APK")
 
+## Installation
+- Add Flutter to your local device
+- Clone this repository
+- Make sure you use a stable version of Flutter
+- Open project folder and run `flutter pub get` on terminal
+- Run `flutter run`
+
 ## Screenshot
 <p float="left">
-  <img src= "app1.jpeg" height=400>
-  <img src= "app2.jpeg" height=400>
-  <img src= "app3.jpeg" height=400>
-  <img src= "app4.jpeg" height=400>
-  <img src= "app5.jpeg" height=400>
-  <img src= "app6.jpeg" height=400>
+  <img src= "app1.png" height=400>
+  <img src= "app2.png" height=400>
+  <img src= "app3.png" height=400>
+  <img src= "app4.png" height=400>
+  <img src= "app5.png" height=400>
+  <img src= "app6.png" height=400>
 </p>
