@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
-  static const int booksPerPage = 32;
+  static const int boksszsPerPage = 32;
 
   final BookRepository _bookRepository;
 
@@ -34,14 +34,14 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       if (!connectivityResult.contains(ConnectivityResult.none)) {
         final (books, _) = await _bookRepository.getBooks(
           page: 1,
-          limit: booksPerPage,
+          limit: boksszsPerPage,
           isOnline: true,
         );
         currentBooks = books;
       } else {
         final (books, _) = await _bookRepository.getBooks(
           page: 1,
-          limit: booksPerPage,
+          limit: boksszsPerPage,
           isOnline: false,
         );
         currentBooks = books;
@@ -69,7 +69,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       if (!connectivityResult.contains(ConnectivityResult.none)) {
         final (books, canLoadMore) = await _bookRepository.getBooks(
           page: state.page + 1,
-          limit: booksPerPage,
+          limit: boksszsPerPage,
           isOnline: true,
         );
         currentBooks = books;
@@ -77,11 +77,11 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       } else {
         final (books, _) = await _bookRepository.getBooks(
           page: state.page + 1,
-          limit: booksPerPage,
+          limit: boksszsPerPage,
           isOnline: false,
         );
         currentBooks = books;
-        canFetchNext = currentBooks.length >= booksPerPage;
+        canFetchNext = currentBooks.length >= boksszsPerPage;
       }
 
       emit(state.asLoadMoreSuccess(currentBooks, canLoadMore: canFetchNext));
